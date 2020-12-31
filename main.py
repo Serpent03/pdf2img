@@ -3,33 +3,32 @@
 from wand import image      #pretty simple. convert png/jpg to dds.
 from pdf2image import convert_from_path, convert_from_bytes  # needs 
 from PIL import Image
-import os
-from os import walk, listdir
+import glob
+import subprocess
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 Tk().withdraw()
 
-home = os.getcwd()
 selectedPdf = askopenfilename()
 path = 'tmpdata'
 
 # set this up
-dirs = os.listdir()
-if 'tmpdata' not in dirs:
-    os.mkdir('tmpdata')
+if path not in (glob.glob('*/')):
+    p=subprocess.Popen("mkdir tmpdata", shell=True)
+    p.wait()
 
 
 # functions, muhahaha
 def single_page(pg):
     pg = int(pg)
-    img = convert_from_path(selectedPdf, size = (1024, 2048), first_page = pg, output_folder = path)
+    img = convert_from_path(selectedPdf, thread_count = 4, size = (1024, 2048), first_page = pg, output_folder = path)
     img[0].save(f'{pg}.jpg', 'JPEG')
 
 def multi_pages(fPg, lPg):
     fPg = int(fPg)
     lPg = int(lPg)
     pageNum = fPg
-    img = convert_from_path(selectedPdf, size = (1024, 2048), first_page=fPg, last_page=lPg, output_folder=path)
+    img = convert_from_path(selectedPdf, thread_count = 4, size = (1024, 2048), first_page=fPg, last_page=lPg, output_folder=path)
 
     for imgFiles in img:
         imgFiles.save(f'{pageNum}.jpg', 'JPEG')
@@ -49,7 +48,7 @@ for chars in pgSelection:
     else:
         pages = pgSelection
 
-# check and assign for single, multiple or range of pdf to convert into image.
+## check and assign for single, multiple or range of pdf to convert into image.
 if not isinstance(pages, list): # single page
     single_page(pages)
 else:
@@ -62,3 +61,8 @@ else:
         multi_pages(pages[0], pages[1]) # call first page and last page for bulk
         
 
+
+
+
+
+input("Press enter to exit..")
