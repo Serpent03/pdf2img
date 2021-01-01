@@ -1,16 +1,16 @@
 # le modules
 
 from wand import image      #pretty simple. convert png/jpg to dds.
-from pdf2image import convert_from_path, convert_from_bytes  # needs 
-from PIL import Image
-import glob
-import subprocess
-from tkinter import Tk
+from pdf2image import convert_from_path, convert_from_bytes  # main pdf to image conversion utility
+from PIL import Image # image handling module
+import glob 
+import subprocess # Instead of OS I used glob and subprocess, as on compilation, OS operation made windows think this script was a virus
+from tkinter import Tk # for pdf file selection
 from tkinter.filedialog import askopenfilename
-Tk().withdraw()
+Tk().withdraw() # don't want any tkinter window. straight to file path
 
-selectedPdf = askopenfilename()
-path = 'tmpdata'
+selectedPdf = askopenfilename() # selected pdf
+path = 'tmpdata' # where the program will output temporary file data it extracts from pdf. folder will be made in same directory as the python script
 
 # set this up
 if path not in (glob.glob('*/')):
@@ -21,8 +21,8 @@ if path not in (glob.glob('*/')):
 # functions, muhahaha
 def single_page(pg):
     pg = int(pg)
-    img = convert_from_path(selectedPdf, thread_count = 4, size = (1024, 2048), first_page = pg, output_folder = path)
-    img[0].save(f'{pg}.jpg', 'JPEG')
+    img = convert_from_path(selectedPdf, thread_count = 4, size = (1024, 2048), first_page = pg, output_folder = path) # slected pdf, run on 4 threads, image size = 1024(width) by 2048(height)
+    img[0].save(f'{pg}.jpg', 'JPEG') # image type. .jpg = JPEG. .png = PNG. jpg is faster than png
 
 def multi_pages(fPg, lPg):
     fPg = int(fPg)
