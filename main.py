@@ -1,5 +1,6 @@
 # le modules
 
+
 from wand import image      #pretty simple. convert png/jpg to dds.
 from pdf2image import convert_from_path, convert_from_bytes  # main pdf to image conversion utility
 from PIL import Image # image handling module
@@ -7,9 +8,10 @@ import glob
 import subprocess # Instead of OS I used glob and subprocess, as on compilation, OS operation made windows think this script was a virus
 from tkinter import Tk # for pdf file selection
 from tkinter.filedialog import askopenfilename
-Tk().withdraw() # don't want any tkinter window. straight to file path
 
+Tk().withdraw() # don't want any tkinter window. straight to file path
 selectedPdf = askopenfilename() # selected pdf
+
 path = 'tmpdata' # where the program will output temporary file data it extracts from pdf. folder will be made in same directory as the python script
 
 # set this up
