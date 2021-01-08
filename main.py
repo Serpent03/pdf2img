@@ -1,5 +1,5 @@
 # le modules
-
+# need GUI in this
 
 from wand import image      #pretty simple. convert png/jpg to dds.
 from pdf2image import convert_from_path, convert_from_bytes  # main pdf to image conversion utility
@@ -37,7 +37,7 @@ def multi_pages(fPg, lPg):
         pageNum += 1
 
 # get yo pages in, half the price fo' everythin'
-pgSelection = input("Which page(s)? For multiple, separsate by comma, for range, separate by hyphen.\n~ ")
+pgSelection = input("Which page(s)? For multiple, separate by comma, for range, separate by hyphen.\n~ ")
 
 for chars in pgSelection:
     pgSelection = pgSelection.replace(' ', '')
