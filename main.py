@@ -12,6 +12,7 @@ from tkinter.filedialog import askopenfilename
 Tk().withdraw() # don't want any tkinter window. straight to file path
 selectedPdf = askopenfilename() # selected pdf
 
+bmsIMGres = 1024
 path = 'tmpdata' # where the program will output temporary file data it extracts from pdf. folder will be made in same directory as the python script
 
 # set this up
@@ -23,14 +24,14 @@ if path not in (glob.glob('*/')):
 # functions, muhahaha
 def single_page(pg):
     pg = int(pg)
-    img = convert_from_path(selectedPdf, thread_count = 4, size = (1024, 2048), first_page = pg, output_folder = path) # slected pdf, run on 4 threads, image size = 1024(width) by 2048(height)
+    img = convert_from_path(selectedPdf, thread_count = 4, size = (bmsIMGres, (bmsIMGres*2)), first_page = pg, output_folder = path) # slected pdf, run on 4 threads, image size = 1024(width) by 2048(height)
     img[0].save(f'{pg}.jpg', 'JPEG') # image type. .jpg = JPEG. .png = PNG. jpg is faster than png
 
 def multi_pages(fPg, lPg):
     fPg = int(fPg)
     lPg = int(lPg)
     pageNum = fPg
-    img = convert_from_path(selectedPdf, thread_count = 4, size = (1024, 2048), first_page=fPg, last_page=lPg, output_folder=path)
+    img = convert_from_path(selectedPdf, thread_count = 4, size = (bmsIMGres, (bmsIMGres*2) ), first_page=fPg, last_page=lPg, output_folder=path)
 
     for imgFiles in img:
         imgFiles.save(f'{pageNum}.jpg', 'JPEG')
